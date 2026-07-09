@@ -37,11 +37,13 @@
             :class="{ on: store.role === r.value }"
             @click="store.role = r.value"
           >
-            <span class="role-head">
-              <b>{{ r.title }}</b>
-              <span v-if="r.company" class="company-chip">{{ r.company }}</span>
-            </span>
+            <b class="role-title">{{ r.title }}</b>
             <small>{{ r.sub }}</small>
+            <span
+              v-if="r.company"
+              class="company-box"
+              :class="r.value === '甲方' ? 'a' : 'b'"
+            >{{ r.company }}</span>
           </button>
         </div>
       </div>
@@ -234,28 +236,28 @@ async function onStart() {
   border-color: var(--blue);
   background: #f3f5ff;
 }
-.role-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-.role-card b {
+.role-title {
+  display: block;
   font-size: 15px;
   color: var(--ink);
+  margin-bottom: 4px;
 }
-.company-chip {
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1;
-  padding: 3px 9px;
-  border-radius: 20px;
+.company-box {
+  display: block;
+  margin-top: 12px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+.company-box.a {
   color: var(--blue);
   background: #eef0fe;
-  border: 1px solid #d7ddfb;
 }
-.role-card.on .company-chip {
-  background: #e3e7ff;
+.company-box.b {
+  color: var(--green);
+  background: #e9f6ef;
 }
 .role-card small {
   font-size: 12.5px;
