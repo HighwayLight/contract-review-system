@@ -34,6 +34,8 @@ export async function uploadContract(file) {
       name: file?.name || '智慧园区软件采购合同.docx',
       detectedType: '采购合同',
       matchConfidence: 96,
+      // 合同主体识别结果（占位，后端就绪后由接口返回）
+      parties: { partyA: 'A公司', partyB: 'B公司' },
     }
   }
   const form = new FormData()

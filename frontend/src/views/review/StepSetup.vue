@@ -37,8 +37,13 @@
             :class="{ on: store.role === r.value }"
             @click="store.role = r.value"
           >
-            <b>{{ r.title }}</b>
+            <b class="role-title">{{ r.title }}</b>
             <small>{{ r.sub }}</small>
+            <span
+              v-if="r.company"
+              class="company-box"
+              :class="r.value === '甲方' ? 'a' : 'b'"
+            >{{ r.company }}</span>
           </button>
         </div>
       </div>
@@ -100,10 +105,20 @@ const submitting = ref(false)
 const points = ref([])
 const auditType = ref(store.detectedType || '采购合同')
 const typeOptions = ['采购合同', '服务合同', '销售合同', '租赁合同', '合作协议', '其他合同']
-const roleOptions = [
-  { value: '甲方', title: '甲方立场', sub: '重点保护采购方、委托方权益' },
-  { value: '乙方', title: '乙方立场', sub: '重点保护供应方、承接方权益' },
-]
+const roleOptions = computed(() => [
+  {
+    value: '甲方',
+    title: '甲方立场',
+    sub: '重点保护采购方、委托方权益',
+    company: store.parties?.partyA || '',
+  },
+  {
+    value: '乙方',
+    title: '乙方立场',
+    sub: '重点保护供应方、承接方权益',
+    company: store.parties?.partyB || '',
+  },
+])
 
 onMounted(async () => {
   loading.value = true
@@ -221,11 +236,28 @@ async function onStart() {
   border-color: var(--blue);
   background: #f3f5ff;
 }
-.role-card b {
+.role-title {
   display: block;
   font-size: 15px;
   color: var(--ink);
   margin-bottom: 4px;
+}
+.company-box {
+  display: block;
+  margin-top: 12px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+.company-box.a {
+  color: var(--blue);
+  background: #eef0fe;
+}
+.company-box.b {
+  color: var(--green);
+  background: #e9f6ef;
 }
 .role-card small {
   font-size: 12.5px;

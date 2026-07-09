@@ -64,6 +64,7 @@ async function onUploaded(file) {
   reviewStore.fileName = res.name
   reviewStore.detectedType = res.detectedType
   reviewStore.matchConfidence = res.matchConfidence
+  reviewStore.parties = res.parties || { partyA: '', partyB: '' }
   step.value = 2
 }
 
